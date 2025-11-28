@@ -4,6 +4,9 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import openapiPlugin from './src/lib/index.js';
 
 export default defineConfig({
+	optimizeDeps: {
+		exclude: ['lightningcss']
+	},
 	plugins: [
 		tailwindcss(),
 		openapiPlugin({
@@ -11,7 +14,7 @@ export default defineConfig({
 			prependPath: '',
 			info: {
 				title: 'SvelteKit OpenAPI Generator Demo',
-				version: '1.0.0',
+				version: '1.0.1',
 				description: 'Demo API showing OpenAPI spec generation from SvelteKit endpoints'
 			},
 			servers: [

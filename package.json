@@ -52,6 +52,9 @@
 		"version:minor": "npm version minor --no-git-tag-version && npm run package && npm publish",
 		"version:major": "npm version major --no-git-tag-version && npm run package && npm publish"
 	},
+	"resolutions": {
+		"vite": "^7.1.7"
+	},
 	"peerDependencies": {
 		"vite": "^5.0.0 || ^6.0.0 || ^7.0.0",
 		"@sveltejs/kit": "^2.0.0",
