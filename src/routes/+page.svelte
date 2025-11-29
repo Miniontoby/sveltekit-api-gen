@@ -11,6 +11,11 @@
 	import GithubIcon from '@lucide/svelte/icons/github';
 	import TerminalIcon from '@lucide/svelte/icons/terminal';
 	import FileCodeIcon from '@lucide/svelte/icons/file-code';
+	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
+	import Highlight from 'svelte-highlight';
+	import typescript from 'svelte-highlight/languages/typescript';
+	import bash from 'svelte-highlight/languages/bash';
+	import 'svelte-highlight/styles/github-dark.css';
 
 	// State for copy buttons
 	let copiedStates = $state({
@@ -28,7 +33,78 @@
 		}, 2000);
 	}
 
-	const installCommand = 'npm install -D sveltekit-openapi-generator';
+	let selectedManager = $state('bun');
+	const installCommands = {
+		bun: 'bun add -d sveltekit-openapi-generator',
+		npm: 'npm install -D sveltekit-openapi-generator',
+		pnpm: 'pnpm add -D sveltekit-openapi-generator',
+		yarn: 'yarn add -D sveltekit-openapi-generator'
+	};
+
+	let installCommand = $derived(installCommands[selectedManager as keyof typeof installCommands]);
+
+	const configOptions = [
+		{
+			option: 'info',
+			type: 'OpenAPIV3.InfoObject',
+			description: 'OpenAPI info section (title, version, description)',
+			default: '-'
+		},
+		{
+			option: 'servers',
+			type: 'OpenAPIV3.ServerObject[]',
+			description: 'OpenAPI servers configuration',
+			default: '-'
+		},
+		{
+			option: 'baseSchemasPath',
+			type: 'string',
+			description: 'Path to file containing shared schema definitions',
+			default: '-'
+		},
+		{
+			option: 'yamlFiles',
+			type: 'string[]',
+			description: 'Additional YAML files to include',
+			default: '-'
+		},
+		{
+			option: 'prependPath',
+			type: 'string',
+			description: "Path prefix to prepend to all routes (e.g., '/api')",
+			default: '-'
+		},
+		{
+			option: 'include',
+			type: 'string[]',
+			description: 'Glob patterns to include',
+			default: "['src/routes/**/+server.ts', 'src/routes/**/+page.server.ts']"
+		},
+		{
+			option: 'exclude',
+			type: 'string[]',
+			description: 'Glob patterns to exclude',
+			default: '-'
+		},
+		{
+			option: 'failOnErrors',
+			type: 'boolean',
+			description: 'Whether to fail on JSDoc parsing errors',
+			default: 'false'
+		},
+		{
+			option: 'outputPath',
+			type: 'string',
+			description: 'Output path for the spec file during build',
+			default: '-'
+		},
+		{
+			option: 'debounceMs',
+			type: 'number',
+			description: 'Debounce delay in milliseconds for file watching',
+			default: '200'
+		}
+	];
 
 	const configExample = `import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
@@ -241,7 +317,20 @@ export async function GET({ url }) {
 					<div
 						class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
 					>
-						<span class="text-sm font-medium text-gray-300">Terminal</span>
+						<div class="relative">
+							<select
+								bind:value={selectedManager}
+								class="appearance-none rounded bg-gray-700 py-1 pr-8 pl-3 text-sm font-medium text-gray-300 transition outline-none hover:bg-gray-600 focus:ring-2 focus:ring-indigo-500"
+							>
+								<option value="bun">bun</option>
+								<option value="npm">npm</option>
+								<option value="pnpm">pnpm</option>
+								<option value="yarn">yarn</option>
+							</select>
+							<ChevronDownIcon
+								class="pointer-events-none absolute top-1/2 right-2 h-4 w-4 -translate-y-1/2 text-gray-400"
+							/>
+						</div>
 						<button
 							onclick={() => copyToClipboard(installCommand, 'install')}
 							class="inline-flex items-center gap-2 rounded px-3 py-1 text-sm text-gray-300 transition hover:bg-gray-700"
@@ -255,9 +344,9 @@ export async function GET({ url }) {
 							{/if}
 						</button>
 					</div>
-					<pre class="overflow-x-auto p-4"><code class="text-sm text-gray-100"
-							>{installCommand}</code
-						></pre>
+					<div class="overflow-x-auto p-4 text-sm">
+						<Highlight language={bash} code={installCommand} />
+					</div>
 				</div>
 			</div>
 
@@ -306,9 +395,9 @@ export async function GET({ url }) {
 								{/if}
 							</button>
 						</div>
-						<pre class="overflow-x-auto p-4"><code class="text-sm text-gray-100"
-								>{configExample}</code
-							></pre>
+						<div class="overflow-x-auto p-4 text-sm">
+							<Highlight language={typescript} code={configExample} />
+						</div>
 					</div>
 				</div>
 
@@ -354,9 +443,9 @@ export async function GET({ url }) {
 								{/if}
 							</button>
 						</div>
-						<pre class="overflow-x-auto p-4"><code class="text-sm text-gray-100"
-								>{endpointExample}</code
-							></pre>
+						<div class="overflow-x-auto p-4 text-sm">
+							<Highlight language={typescript} code={endpointExample} />
+						</div>
 					</div>
 				</div>
 
@@ -400,9 +489,9 @@ export async function GET({ url }) {
 								{/if}
 							</button>
 						</div>
-						<pre class="overflow-x-auto p-4"><code class="text-sm text-gray-100"
-								>{schemaExample}</code
-							></pre>
+						<div class="overflow-x-auto p-4 text-sm">
+							<Highlight language={typescript} code={schemaExample} />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -466,8 +555,9 @@ export async function GET({ url }) {
 						{/if}
 					</button>
 				</div>
-				<pre class="overflow-x-auto p-4"><code class="text-sm text-gray-100">{configExample}</code
-					></pre>
+				<div class="overflow-x-auto p-4 text-sm">
+					<Highlight language={typescript} code={configExample} />
+				</div>
 			</div>
 
 			<!-- Advanced Configuration -->
@@ -488,89 +578,16 @@ export async function GET({ url }) {
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
-							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">info</td>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">OpenAPIV3.InfoObject</td>
-								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
-									>OpenAPI info section (title, version, description)</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
-							</tr>
-							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">servers</td>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">OpenAPIV3.ServerObject[]</td>
-								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
-									>OpenAPI servers configuration</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
-							</tr>
-							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400"
-									>baseSchemasPath</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string</td>
-								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
-									>Path to file containing shared schema definitions</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
-							</tr>
-							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">yamlFiles</td>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string[]</td>
-								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
-									>Additional YAML files to include</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
-							</tr>
-							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">prependPath</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string</td>
-								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
-									>Path prefix to prepend to all routes (e.g., '/api')</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
-							</tr>
-							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">include</td>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string[]</td>
-								<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Glob patterns to include</td>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400"
-									>['src/routes/**/+server.ts', 'src/routes/**/+page.server.ts']</td
-								>
-							</tr>
-							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">exclude</td>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string[]</td>
-								<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Glob patterns to exclude</td>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
-							</tr>
-							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400"
-									>failOnErrors</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">boolean</td>
-								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
-									>Whether to fail on JSDoc parsing errors</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">false</td>
-							</tr>
-							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">outputPath</td>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string</td>
-								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
-									>Output path for the spec file during build</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
-							</tr>
-							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">debounceMs</td>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">number</td>
-								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
-									>Debounce delay in milliseconds for file watching</td
-								>
-								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">200</td>
-							</tr>
+							{#each configOptions as option}
+								<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+									<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400"
+										>{option.option}</td
+									>
+									<td class="px-6 py-4 text-gray-500 dark:text-gray-400">{option.type}</td>
+									<td class="px-6 py-4 text-gray-600 dark:text-gray-300">{option.description}</td>
+									<td class="px-6 py-4 text-gray-500 dark:text-gray-400">{option.default}</td>
+								</tr>
+							{/each}
 						</tbody>
 					</table>
 				</div>

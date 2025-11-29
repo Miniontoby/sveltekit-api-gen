@@ -91,6 +91,7 @@
 		"publint": "^0.3.13",
 		"svelte": "^5.39.5",
 		"svelte-check": "^4.3.2",
+		"svelte-highlight": "^7.9.0",
 		"swagger-ui": "^5.29.5",
 		"swagger-ui-dist": "^5.29.5",
 		"tailwind-merge": "^3.3.1",
