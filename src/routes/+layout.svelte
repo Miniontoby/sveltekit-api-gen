@@ -8,6 +8,7 @@
 	import PackageIcon from '@lucide/svelte/icons/package';
 	import BookOpenIcon from '@lucide/svelte/icons/book-open';
 	import HeartIcon from '@lucide/svelte/icons/heart';
+	import RocketIcon from '@lucide/svelte/icons/rocket';
 
 	let { children } = $props();
 
@@ -32,7 +33,7 @@
 						href="/"
 						class="flex items-center space-x-2 text-xl font-bold transition hover:opacity-80"
 					>
-						<span class="text-2xl">🚀</span>
+						<RocketIcon class="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
 						<span class="hidden text-indigo-600 sm:inline dark:text-indigo-400">
 							SvelteKit OpenAPI
 						</span>
@@ -124,7 +125,7 @@
 				<!-- About -->
 				<div>
 					<h3 class="mb-4 flex items-center gap-2 text-lg font-semibold">
-						<span class="text-2xl">🚀</span>
+						<RocketIcon class="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
 						SvelteKit OpenAPI
 					</h3>
 					<p class="text-sm text-gray-600 dark:text-gray-400">

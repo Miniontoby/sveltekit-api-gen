@@ -469,6 +469,112 @@ export async function GET({ url }) {
 				<pre class="overflow-x-auto p-4"><code class="text-sm text-gray-100">{configExample}</code
 					></pre>
 			</div>
+
+			<!-- Advanced Configuration -->
+			<div class="mt-12">
+				<h3 class="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+					Advanced Configuration
+				</h3>
+				<div
+					class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-950"
+				>
+					<table class="w-full text-left text-sm">
+						<thead class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white">
+							<tr>
+								<th class="px-6 py-4 font-semibold">Option</th>
+								<th class="px-6 py-4 font-semibold">Type</th>
+								<th class="px-6 py-4 font-semibold">Description</th>
+								<th class="px-6 py-4 font-semibold">Default</th>
+							</tr>
+						</thead>
+						<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">info</td>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">OpenAPIV3.InfoObject</td>
+								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
+									>OpenAPI info section (title, version, description)</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
+							</tr>
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">servers</td>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">OpenAPIV3.ServerObject[]</td>
+								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
+									>OpenAPI servers configuration</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
+							</tr>
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400"
+									>baseSchemasPath</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string</td>
+								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
+									>Path to file containing shared schema definitions</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
+							</tr>
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">yamlFiles</td>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string[]</td>
+								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
+									>Additional YAML files to include</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
+							</tr>
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">prependPath</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string</td>
+								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
+									>Path prefix to prepend to all routes (e.g., '/api')</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
+							</tr>
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">include</td>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string[]</td>
+								<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Glob patterns to include</td>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400"
+									>['src/routes/**/+server.ts', 'src/routes/**/+page.server.ts']</td
+								>
+							</tr>
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">exclude</td>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string[]</td>
+								<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Glob patterns to exclude</td>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
+							</tr>
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400"
+									>failOnErrors</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">boolean</td>
+								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
+									>Whether to fail on JSDoc parsing errors</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">false</td>
+							</tr>
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">outputPath</td>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">string</td>
+								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
+									>Output path for the spec file during build</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">-</td>
+							</tr>
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+								<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400">debounceMs</td>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">number</td>
+								<td class="px-6 py-4 text-gray-600 dark:text-gray-300"
+									>Debounce delay in milliseconds for file watching</td
+								>
+								<td class="px-6 py-4 text-gray-500 dark:text-gray-400">200</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
