@@ -52,26 +52,26 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50 dark:bg-gray-950">
-	<header
-		class="bg-linear-to-br from-indigo-600 via-purple-600 to-purple-700 px-4 py-16 text-center text-white shadow-lg dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900"
-	>
-		<div class="container mx-auto">
-			<h1 class="mb-4 text-5xl font-bold">API Documentation</h1>
-			<p class="text-xl opacity-90">
-				Explore and test the API endpoints interactively with Swagger UI
-			</p>
-			<div class="mt-6 flex flex-col items-center justify-center gap-3 text-sm sm:flex-row">
-				<div class="flex items-center gap-2 rounded-lg bg-white/20 px-4 py-2 backdrop-blur">
-					<span class="font-semibold">Endpoints:</span>
-					<span>{Object.keys(spec.paths || {}).length}</span>
-				</div>
-				<div class="flex items-center gap-2 rounded-lg bg-white/20 px-4 py-2 backdrop-blur">
-					<span class="font-semibold">Schemas:</span>
-					<span>{Object.keys(spec.components?.schemas || {}).length}</span>
-				</div>
-				<div class="flex items-center gap-2 rounded-lg bg-white/20 px-4 py-2 backdrop-blur">
-					<span class="font-semibold">Version:</span>
-					<span>{spec.info.version}</span>
+	<header>
+		<div class="bg-indigo-700 px-4 py-16 text-center text-white shadow-lg dark:bg-slate-900">
+			<div class="container mx-auto">
+				<h1 class="mb-4 text-5xl font-bold">API Documentation</h1>
+				<p class="text-xl opacity-90">
+					Explore and test the API endpoints interactively with Swagger UI
+				</p>
+				<div class="mt-6 flex flex-col items-center justify-center gap-3 text-sm sm:flex-row">
+					<div class="flex items-center gap-2 rounded-lg bg-white/20 px-4 py-2 backdrop-blur">
+						<span class="font-semibold">Endpoints:</span>
+						<span>{Object.keys(spec.paths || {}).length}</span>
+					</div>
+					<div class="flex items-center gap-2 rounded-lg bg-white/20 px-4 py-2 backdrop-blur">
+						<span class="font-semibold">Schemas:</span>
+						<span>{Object.keys(spec.components?.schemas || {}).length}</span>
+					</div>
+					<div class="flex items-center gap-2 rounded-lg bg-white/20 px-4 py-2 backdrop-blur">
+						<span class="font-semibold">Version:</span>
+						<span>{spec.info.version}</span>
+					</div>
 				</div>
 			</div>
 		</div>

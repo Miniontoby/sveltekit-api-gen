@@ -1,5 +1,4 @@
 <script lang="ts">
-	import spec from 'virtual:openapi-spec';
 	import RocketIcon from '@lucide/svelte/icons/rocket';
 	import ZapIcon from '@lucide/svelte/icons/zap';
 	import PackageIcon from '@lucide/svelte/icons/package';
@@ -12,9 +11,6 @@
 	import GithubIcon from '@lucide/svelte/icons/github';
 	import TerminalIcon from '@lucide/svelte/icons/terminal';
 	import FileCodeIcon from '@lucide/svelte/icons/file-code';
-
-	const pathCount = Object.keys(spec.paths || {}).length;
-	const schemaCount = Object.keys(spec.components?.schemas || {}).length;
 
 	// State for copy buttons
 	let copiedStates = $state({
@@ -43,6 +39,11 @@ export default defineConfig({
     openapiPlugin({
       baseSchemasPath: 'src/lib/schemas.js',
       prependPath: '/api',
+      info: {
+        title: 'My API',
+        version: '1.0.0',
+        description: 'My API Description'
+      },
       outputPath: 'static/openapi.json'
     }),
     sveltekit()
@@ -139,9 +140,7 @@ export async function GET({ url }) {
 </svelte:head>
 
 <!-- Hero Section -->
-<section
-	class="relative overflow-hidden bg-linear-to-br from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900"
->
+<section class="relative overflow-hidden bg-indigo-600 dark:bg-slate-900">
 	<div class="container mx-auto px-4 py-24 sm:px-6 lg:px-8">
 		<div class="mx-auto max-w-4xl text-center text-white">
 			<div
@@ -184,26 +183,6 @@ export async function GET({ url }) {
 					<GithubIcon class="h-5 w-5" />
 					View on GitHub
 				</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- Stats Banner -->
-	<div class="border-t border-white/20 bg-white/10 backdrop-blur">
-		<div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
-			<div class="grid grid-cols-1 gap-6 text-center text-white sm:grid-cols-3">
-				<div>
-					<div class="text-4xl font-bold">{pathCount}</div>
-					<div class="mt-1 text-sm opacity-90">API Endpoints (Demo)</div>
-				</div>
-				<div>
-					<div class="text-4xl font-bold">{schemaCount}</div>
-					<div class="mt-1 text-sm opacity-90">Schemas (Demo)</div>
-				</div>
-				<div>
-					<div class="text-4xl font-bold">{spec.info.version}</div>
-					<div class="mt-1 text-sm opacity-90">API Version</div>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -455,6 +434,45 @@ export async function GET({ url }) {
 	</div>
 </section>
 
+<!-- Configuration Section -->
+<section id="configuration" class="bg-white py-20 dark:bg-gray-950">
+	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="mx-auto max-w-4xl">
+			<div class="mb-12 text-center">
+				<h2 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">Configuration</h2>
+				<p class="text-lg text-gray-600 dark:text-gray-400">
+					Customize your API documentation details in <code
+						class="rounded bg-gray-100 px-2 py-1 text-sm dark:bg-gray-800">vite.config.ts</code
+					>
+				</p>
+			</div>
+			<div
+				class="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 dark:border-gray-700"
+			>
+				<div
+					class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
+				>
+					<span class="text-sm font-medium text-gray-300">vite.config.ts</span>
+					<button
+						onclick={() => copyToClipboard(configExample, 'config')}
+						class="inline-flex items-center gap-2 rounded px-3 py-1 text-sm text-gray-300 transition hover:bg-gray-700"
+					>
+						{#if copiedStates.config}
+							<CheckIcon class="h-4 w-4 text-green-400" />
+							<span>Copied!</span>
+						{:else}
+							<CopyIcon class="h-4 w-4" />
+							<span>Copy</span>
+						{/if}
+					</button>
+				</div>
+				<pre class="overflow-x-auto p-4"><code class="text-sm text-gray-100">{configExample}</code
+					></pre>
+			</div>
+		</div>
+	</div>
+</section>
+
 <!-- Live Demo Section -->
 <section class="bg-gray-50 py-20 dark:bg-gray-900">
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -505,9 +523,7 @@ export async function GET({ url }) {
 </section>
 
 <!-- CTA Section -->
-<section
-	class="bg-linear-to-br from-indigo-600 to-purple-600 py-20 dark:from-indigo-900 dark:to-purple-900"
->
+<section class="bg-indigo-700 py-20 dark:bg-indigo-900">
 	<div class="container mx-auto px-4 text-center sm:px-6 lg:px-8">
 		<h2 class="mb-6 text-4xl font-bold text-white">Ready to Get Started?</h2>
 		<p class="mb-10 text-xl text-white/90">

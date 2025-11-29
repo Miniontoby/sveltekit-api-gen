@@ -33,9 +33,7 @@
 						class="flex items-center space-x-2 text-xl font-bold transition hover:opacity-80"
 					>
 						<span class="text-2xl">🚀</span>
-						<span
-							class="hidden bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent sm:inline dark:from-indigo-400 dark:to-purple-400"
-						>
+						<span class="hidden text-indigo-600 sm:inline dark:text-indigo-400">
 							SvelteKit OpenAPI
 						</span>
 					</a>
