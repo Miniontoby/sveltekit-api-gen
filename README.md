@@ -1,7 +1,9 @@
 # SvelteKit OpenAPI Generator
 
 [![npm version](https://img.shields.io/npm/v/sveltekit-openapi-generator.svg)](https://www.npmjs.com/package/sveltekit-openapi-generator)
+[![npm downloads](https://img.shields.io/npm/dm/sveltekit-openapi-generator.svg)](https://www.npmjs.com/package/sveltekit-openapi-generator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/Michael-Obele/sveltekit-api-gen?style=social)](https://github.com/Michael-Obele/sveltekit-api-gen)
 
 **Automatically generate OpenAPI 3.0 specifications from your SvelteKit server endpoints using JSDoc `@swagger` annotations.**
 
