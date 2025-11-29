@@ -168,6 +168,38 @@ export async function GET({ url }) {
  *           type: string
  */`;
 
+	const steps = [
+		{
+			step: 1,
+			title: 'Configure the Plugin',
+			description:
+				'Add the plugin to your <code class="rounded bg-gray-100 px-2 py-1 text-sm dark:bg-gray-800">vite.config.js</code> before the SvelteKit plugin',
+			fileLabel: 'vite.config.js',
+			code: configExample,
+			copyKey: 'config',
+			language: typescript
+		},
+		{
+			step: 2,
+			title: 'Document Your Endpoints',
+			description:
+				'Add <code class="rounded bg-gray-100 px-2 py-1 text-sm dark:bg-gray-800">@swagger</code> JSDoc blocks to your server files',
+			fileLabel: 'src/routes/api/users/+server.js',
+			code: endpointExample,
+			copyKey: 'endpoint',
+			language: typescript
+		},
+		{
+			step: 3,
+			title: 'Define Shared Schemas (Optional)',
+			description: 'Create reusable component schemas to avoid duplication',
+			fileLabel: 'src/lib/schemas.js',
+			code: schemaExample,
+			copyKey: 'schema',
+			language: typescript
+		}
+	];
+
 	const features = [
 		{
 			icon: RefreshCwIcon,
@@ -305,7 +337,7 @@ export async function GET({ url }) {
 			<div class="mb-12 text-center">
 				<h2 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">Quick Installation</h2>
 				<p class="text-lg text-gray-600 dark:text-gray-400">
-					Get started in minutes with npm, yarn, or pnpm
+					Get started in minutes with bun, npm, yarn, or pnpm
 				</p>
 			</div>
 
@@ -352,148 +384,53 @@ export async function GET({ url }) {
 
 			<!-- Steps -->
 			<div class="space-y-8">
-				<!-- Step 1: Configure Plugin -->
-				<div>
-					<div class="mb-4 flex items-start gap-4">
-						<div
-							class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-lg font-bold text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400"
-						>
-							1
-						</div>
-						<div>
-							<h3 class="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
-								Configure the Plugin
-							</h3>
-							<p class="text-gray-600 dark:text-gray-400">
-								Add the plugin to your <code
-									class="rounded bg-gray-100 px-2 py-1 text-sm dark:bg-gray-800"
-									>vite.config.js</code
-								> before the SvelteKit plugin
-							</p>
-						</div>
-					</div>
-					<div
-						class="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 dark:border-gray-700"
-					>
-						<div
-							class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
-						>
-							<span class="flex items-center gap-2 text-sm font-medium text-gray-300">
-								<FileCodeIcon class="h-4 w-4" />
-								vite.config.js
-							</span>
-							<button
-								onclick={() => copyToClipboard(configExample, 'config')}
-								class="inline-flex items-center gap-2 rounded px-3 py-1 text-sm text-gray-300 transition hover:bg-gray-700"
+				{#each steps as step (step.step)}
+					<div>
+						<div class="mb-4 flex items-start gap-4">
+							<div
+								class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-lg font-bold text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400"
 							>
-								{#if copiedStates.config}
-									<CheckIcon class="h-4 w-4 text-green-400" />
-									<span>Copied!</span>
-								{:else}
-									<CopyIcon class="h-4 w-4" />
-									<span>Copy</span>
-								{/if}
-							</button>
+								{step.step}
+							</div>
+							<div>
+								<h3 class="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
+									{step.title}
+								</h3>
+								<p class="text-gray-600 dark:text-gray-400">
+									{@html step.description}
+								</p>
+							</div>
 						</div>
-						<div class="overflow-x-auto p-4 text-sm">
-							<Highlight language={typescript} code={configExample} />
-						</div>
-					</div>
-				</div>
-
-				<!-- Step 2: Document Endpoints -->
-				<div>
-					<div class="mb-4 flex items-start gap-4">
 						<div
-							class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-lg font-bold text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400"
+							class="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 dark:border-gray-700"
 						>
-							2
-						</div>
-						<div>
-							<h3 class="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
-								Document Your Endpoints
-							</h3>
-							<p class="text-gray-600 dark:text-gray-400">
-								Add <code class="rounded bg-gray-100 px-2 py-1 text-sm dark:bg-gray-800"
-									>@swagger</code
-								> JSDoc blocks to your server files
-							</p>
-						</div>
-					</div>
-					<div
-						class="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 dark:border-gray-700"
-					>
-						<div
-							class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
-						>
-							<span class="flex items-center gap-2 text-sm font-medium text-gray-300">
-								<FileCodeIcon class="h-4 w-4" />
-								src/routes/api/users/+server.js
-							</span>
-							<button
-								onclick={() => copyToClipboard(endpointExample, 'endpoint')}
-								class="inline-flex items-center gap-2 rounded px-3 py-1 text-sm text-gray-300 transition hover:bg-gray-700"
+							<div
+								class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
 							>
-								{#if copiedStates.endpoint}
-									<CheckIcon class="h-4 w-4 text-green-400" />
-									<span>Copied!</span>
-								{:else}
-									<CopyIcon class="h-4 w-4" />
-									<span>Copy</span>
-								{/if}
-							</button>
-						</div>
-						<div class="overflow-x-auto p-4 text-sm">
-							<Highlight language={typescript} code={endpointExample} />
-						</div>
-					</div>
-				</div>
-
-				<!-- Step 3: Define Schemas -->
-				<div>
-					<div class="mb-4 flex items-start gap-4">
-						<div
-							class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-lg font-bold text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400"
-						>
-							3
-						</div>
-						<div>
-							<h3 class="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
-								Define Shared Schemas (Optional)
-							</h3>
-							<p class="text-gray-600 dark:text-gray-400">
-								Create reusable component schemas to avoid duplication
-							</p>
+								<span class="flex items-center gap-2 text-sm font-medium text-gray-300">
+									<FileCodeIcon class="h-4 w-4" />
+									{step.fileLabel}
+								</span>
+								<button
+									onclick={() =>
+										copyToClipboard(step.code, step.copyKey as keyof typeof copiedStates)}
+									class="inline-flex items-center gap-2 rounded px-3 py-1 text-sm text-gray-300 transition hover:bg-gray-700"
+								>
+									{#if copiedStates[step.copyKey as keyof typeof copiedStates]}
+										<CheckIcon class="h-4 w-4 text-green-400" />
+										<span>Copied!</span>
+									{:else}
+										<CopyIcon class="h-4 w-4" />
+										<span>Copy</span>
+									{/if}
+								</button>
+							</div>
+							<div class="overflow-x-auto p-4 text-sm">
+								<Highlight language={step.language} code={step.code} />
+							</div>
 						</div>
 					</div>
-					<div
-						class="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 dark:border-gray-700"
-					>
-						<div
-							class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
-						>
-							<span class="flex items-center gap-2 text-sm font-medium text-gray-300">
-								<FileCodeIcon class="h-4 w-4" />
-								src/lib/schemas.js
-							</span>
-							<button
-								onclick={() => copyToClipboard(schemaExample, 'schema')}
-								class="inline-flex items-center gap-2 rounded px-3 py-1 text-sm text-gray-300 transition hover:bg-gray-700"
-							>
-								{#if copiedStates.schema}
-									<CheckIcon class="h-4 w-4 text-green-400" />
-									<span>Copied!</span>
-								{:else}
-									<CopyIcon class="h-4 w-4" />
-									<span>Copy</span>
-								{/if}
-							</button>
-						</div>
-						<div class="overflow-x-auto p-4 text-sm">
-							<Highlight language={typescript} code={schemaExample} />
-						</div>
-					</div>
-				</div>
+				{/each}
 			</div>
 
 			<!-- Success Message -->
@@ -578,7 +515,7 @@ export async function GET({ url }) {
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
-							{#each configOptions as option}
+							{#each configOptions as option (option.option)}
 								<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
 									<td class="px-6 py-4 font-mono text-indigo-600 dark:text-indigo-400"
 										>{option.option}</td
