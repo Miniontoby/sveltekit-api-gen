@@ -260,8 +260,29 @@ export async function GET({ url }) {
 		}
 	];
 	let theme: string = $state('');
-	onMount(() => {
+	$effect(() => {
 		theme = mode.current === 'dark' ? githubDark : oneCLight;
+	});
+
+	onMount(async () => {
+		// Load Utterances for comments
+		try {
+			const utterancesScript = document.createElement('script');
+			utterancesScript.src = 'https://utteranc.es/client.js';
+			utterancesScript.async = true;
+			utterancesScript.crossOrigin = 'anonymous';
+			utterancesScript.setAttribute('repo', 'Michael-Obele/sveltekit-api-gen');
+			utterancesScript.setAttribute('issue-term', 'pathname');
+			utterancesScript.setAttribute('theme', 'preferred-color-scheme');
+			utterancesScript.setAttribute('label', 'comment');
+
+			const container = document.getElementById('utterances-container');
+			if (container) {
+				container.appendChild(utterancesScript);
+			}
+		} catch (error) {
+			console.error('Failed to load Utterances:', error);
+		}
 	});
 </script>
 
@@ -371,7 +392,7 @@ export async function GET({ url }) {
 			<!-- Install Command -->
 			<div class="mb-8">
 				<div
-					class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+					class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-[#0D1117]"
 				>
 					<div
 						class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
@@ -429,7 +450,7 @@ export async function GET({ url }) {
 							</div>
 						</div>
 						<div
-							class="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+							class="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-[#0D1117]"
 						>
 							<div
 								class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
@@ -500,7 +521,7 @@ export async function GET({ url }) {
 				</p>
 			</div>
 			<div
-				class="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+				class="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-[#0D1117]"
 			>
 				<div
 					class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
@@ -635,6 +656,19 @@ export async function GET({ url }) {
 				<GithubIcon class="h-5 w-5" />
 				Star on GitHub
 			</a>
+		</div>
+	</div>
+</section>
+
+<!-- GitHub Discussions via Utterances -->
+<section class="py-20">
+	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="mx-auto max-w-4xl text-center">
+			<h2 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">Comments & Discussions</h2>
+			<p class="mb-8 text-lg text-gray-600 dark:text-gray-400">
+				Have questions or feedback? Join the discussion on GitHub.
+			</p>
+			<div id="utterances-container"></div>
 		</div>
 	</div>
 </section>
