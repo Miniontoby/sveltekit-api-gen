@@ -304,11 +304,16 @@ static/openapi.json
 
 | Option            | Type       | Default     | Description                                           |
 | ----------------- | ---------- | ----------- | ----------------------------------------------------- |
+| `info`            | `object`   | `undefined` | OpenAPI info section (title, version, description)    |
+| `servers`         | `array`    | `undefined` | OpenAPI servers configuration                         |
 | `baseSchemasPath` | `string`   | `undefined` | Path to file with shared `@swagger` component schemas |
 | `yamlFiles`       | `string[]` | `[]`        | Additional YAML files to merge into the spec          |
 | `prependPath`     | `string`   | `''`        | Prefix to prepend to all paths (e.g., `/api`)         |
+| `include`         | `string[]` | `['src/routes/**/{+server,+page.server}.{js,ts}']` | Glob patterns to include |
+| `exclude`         | `string[]` | `['**/node_modules/**', '**/.svelte-kit/**']` | Glob patterns to exclude |
+| `failOnErrors`    | `boolean`  | `false`     | Whether to fail on JSDoc parsing errors               |
 | `outputPath`      | `string`   | `undefined` | File path to write spec during build                  |
-| `debounceMs`      | `number`   | `100`       | Debounce delay for HMR regeneration                   |
+| `debounceMs`      | `number`   | `200`       | Debounce delay for HMR regeneration                   |
 
 ### SvelteKit Route Mapping
 

@@ -80,13 +80,13 @@
 			option: 'include',
 			type: 'string[]',
 			description: 'Glob patterns to include',
-			default: "['src/routes/**/+server.ts', 'src/routes/**/+page.server.ts']"
+			default: "['src/routes/**/{+server,+page.server}.{js,ts}']"
 		},
 		{
 			option: 'exclude',
 			type: 'string[]',
 			description: 'Glob patterns to exclude',
-			default: '-'
+			default: "['**/node_modules/**', '**/.svelte-kit/**']"
 		},
 		{
 			option: 'failOnErrors',
