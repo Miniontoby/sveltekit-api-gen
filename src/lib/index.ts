@@ -2,7 +2,7 @@ import type { Plugin, ViteDevServer, ResolvedConfig } from 'vite';
 import type { OpenAPIV3 } from 'openapi-types';
 import { generateSpec, writeSpec, type GeneratorOptions } from './generator.js';
 import { resolve } from 'path';
-import { debounce } from 'lodash-es';
+import { debounce } from './utils.js';
 
 /**
  * Plugin options for the OpenAPI generator
