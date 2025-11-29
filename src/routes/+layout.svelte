@@ -34,7 +34,7 @@
 	<meta name="twitter:image" content={ogImage} />
 </svelte:head>
 
-<ModeWatcher />
+<ModeWatcher defaultMode={'dark'} />
 
 <div
 	class="min-h-screen bg-white text-gray-900 transition-colors dark:bg-gray-950 dark:text-gray-100"

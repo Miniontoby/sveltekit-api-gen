@@ -18,6 +18,7 @@
 	import githubDark from 'svelte-highlight/styles/github-dark';
 	import oneCLight from 'svelte-highlight/styles/1c-light';
 	import { mode } from 'mode-watcher';
+	import { onMount } from 'svelte';
 
 	// State for copy buttons
 	let copiedStates = $state({
@@ -115,14 +116,33 @@ import openapiPlugin from 'sveltekit-openapi-generator';
 export default defineConfig({
   plugins: [
     openapiPlugin({
-      baseSchemasPath: 'src/lib/schemas.js',
-      prependPath: '/api',
+      // OpenAPI info section
       info: {
         title: 'My API',
         version: '1.0.0',
         description: 'My API Description'
       },
-      outputPath: 'static/openapi.json'
+      // OpenAPI servers configuration
+      servers: [
+        { url: 'https://api.example.com', description: 'Production' },
+        { url: 'http://localhost:5173', description: 'Development' }
+      ],
+      // Path to shared schema definitions
+      baseSchemasPath: 'src/lib/schemas.js',
+      // Additional YAML files to include
+      yamlFiles: ['src/lib/extra-specs.yaml'],
+      // Path prefix for all routes
+      prependPath: '/api',
+      // Glob patterns to include
+      include: ['src/routes/**/{+server,+page.server}.{js,ts}'],
+      // Glob patterns to exclude
+      exclude: ['**/node_modules/**', '**/.svelte-kit/**'],
+      // Whether to fail on JSDoc parsing errors
+      failOnErrors: false,
+      // Output path for the spec file during build
+      outputPath: 'static/openapi.json',
+      // Debounce delay in milliseconds for file watching
+      debounceMs: 200
     }),
     sveltekit()
   ]
@@ -239,6 +259,10 @@ export async function GET({ url }) {
 			description: 'Easy integration with Swagger UI for beautiful, interactive API documentation.'
 		}
 	];
+	let theme: string = $state('');
+	onMount(() => {
+		theme = mode.current === 'dark' ? githubDark : oneCLight;
+	});
 </script>
 
 <svelte:head>
@@ -247,7 +271,7 @@ export async function GET({ url }) {
 		name="description"
 		content="Automatically generate OpenAPI 3.0 specifications from your SvelteKit server endpoints using JSDoc @swagger annotations. Hot Module Replacement, TypeScript support, and more."
 	/>
-	{@html mode.current === 'dark' ? githubDark : oneCLight}
+	{@html theme}
 </svelte:head>
 
 <!-- Hero Section -->
