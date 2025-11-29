@@ -2,6 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
 import { sveltekit } from '@sveltejs/kit/vite';
 import openapiPlugin from './src/lib/index.js';
+import { sveltekitOG } from '@ethercorps/sveltekit-og/plugin';
 
 export default defineConfig({
 	optimizeDeps: {
@@ -26,7 +27,8 @@ export default defineConfig({
 			outputPath: 'static/openapi.json',
 			debounceMs: 100
 		}),
-		sveltekit()
+		sveltekit(),
+		sveltekitOG()
 	],
 	test: {
 		expect: { requireAssertions: true },

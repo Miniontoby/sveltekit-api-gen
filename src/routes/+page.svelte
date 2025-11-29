@@ -15,7 +15,9 @@
 	import Highlight from 'svelte-highlight';
 	import typescript from 'svelte-highlight/languages/typescript';
 	import bash from 'svelte-highlight/languages/bash';
-	import 'svelte-highlight/styles/github-dark.css';
+	import githubDark from 'svelte-highlight/styles/github-dark';
+	import oneCLight from 'svelte-highlight/styles/1c-light';
+	import { mode } from 'mode-watcher';
 
 	// State for copy buttons
 	let copiedStates = $state({
@@ -245,6 +247,7 @@ export async function GET({ url }) {
 		name="description"
 		content="Automatically generate OpenAPI 3.0 specifications from your SvelteKit server endpoints using JSDoc @swagger annotations. Hot Module Replacement, TypeScript support, and more."
 	/>
+	{@html mode.current === 'dark' ? githubDark : oneCLight}
 </svelte:head>
 
 <!-- Hero Section -->
@@ -344,7 +347,7 @@ export async function GET({ url }) {
 			<!-- Install Command -->
 			<div class="mb-8">
 				<div
-					class="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 dark:border-gray-700"
+					class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
 				>
 					<div
 						class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
@@ -402,7 +405,7 @@ export async function GET({ url }) {
 							</div>
 						</div>
 						<div
-							class="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 dark:border-gray-700"
+							class="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
 						>
 							<div
 								class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
@@ -473,7 +476,7 @@ export async function GET({ url }) {
 				</p>
 			</div>
 			<div
-				class="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 dark:border-gray-700"
+				class="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
 			>
 				<div
 					class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2"
