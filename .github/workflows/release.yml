@@ -29,10 +29,11 @@ jobs:
           bun-version: latest
 
       # Setup Node.js for npm publish with trusted publishers
+      # Node 24 is required for OIDC trusted publishing to work properly
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
       # Upgrade npm to 11.5.1+ (required for trusted publishers)
@@ -94,8 +95,11 @@ jobs:
 
       # Use npm for publishing with trusted publishers (OIDC - no token needed)
       # Provenance is automatically generated with trusted publishing
+      # NPM_CONFIG_PROVENANCE=true is required to fix OIDC 404 bug (npm/cli#8730)
       - name: Publish to npm with provenance
         run: npm publish --provenance --access public
+        env:
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Create git tag
         run: |
