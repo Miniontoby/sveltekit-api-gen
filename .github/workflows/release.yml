@@ -10,6 +10,11 @@ jobs:
     if: contains(github.event.head_commit.message, '[patch]') || contains(github.event.head_commit.message, '[minor]') || contains(github.event.head_commit.message, '[major]')
     runs-on: ubuntu-latest
 
+    # Required permissions for npm provenance
+    permissions:
+      contents: write # For creating tags and releases
+      id-token: write # Required for npm provenance attestation
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -76,8 +81,8 @@ jobs:
       - name: Build package
         run: npm run package
 
-      - name: Publish to npm
-        run: npm publish
+      - name: Publish to npm with provenance
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -97,6 +102,8 @@ jobs:
           release_name: Release v${{ steps.new-version.outputs.version }}
           body: |
             Automated release v${{ steps.new-version.outputs.version }}
+
+            ✅ Published with npm provenance
 
             Changes in this release:
             - ${{ github.event.head_commit.message }}
