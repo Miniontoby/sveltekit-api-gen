@@ -10,10 +10,10 @@ jobs:
     if: contains(github.event.head_commit.message, '[patch]') || contains(github.event.head_commit.message, '[minor]') || contains(github.event.head_commit.message, '[major]')
     runs-on: ubuntu-latest
 
-    # Required permissions for npm provenance
+    # Required permissions for npm trusted publishing with provenance
     permissions:
       contents: write # For creating tags and releases
-      id-token: write # Required for npm provenance attestation
+      id-token: write # Required for OIDC authentication (npm trusted publishers)
 
     steps:
       - name: Checkout code
@@ -28,12 +28,16 @@ jobs:
         with:
           bun-version: latest
 
-      # Setup Node.js for npm publish with provenance
+      # Setup Node.js for npm publish with trusted publishers
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
+
+      # Upgrade npm to 11.5.1+ (required for trusted publishers)
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@latest
 
       - name: Install dependencies with Bun
         run: bun install
@@ -88,11 +92,10 @@ jobs:
       - name: Build package with Bun
         run: bun run package
 
-      # Use npm for publishing with provenance (Bun doesn't support --provenance yet)
+      # Use npm for publishing with trusted publishers (OIDC - no token needed)
+      # Provenance is automatically generated with trusted publishing
       - name: Publish to npm with provenance
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create git tag
         run: |
