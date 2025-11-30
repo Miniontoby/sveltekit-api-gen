@@ -1,17 +1,19 @@
 <script lang="ts">
-	import RocketIcon from '@lucide/svelte/icons/rocket';
-	import ZapIcon from '@lucide/svelte/icons/zap';
-	import PackageIcon from '@lucide/svelte/icons/package';
-	import CodeIcon from '@lucide/svelte/icons/code';
-	import RefreshCwIcon from '@lucide/svelte/icons/refresh-cw';
-	import ShieldCheckIcon from '@lucide/svelte/icons/shield-check';
-	import CopyIcon from '@lucide/svelte/icons/copy';
-	import CheckIcon from '@lucide/svelte/icons/check';
-	import BookOpenIcon from '@lucide/svelte/icons/book-open';
-	import GithubIcon from '@lucide/svelte/icons/github';
-	import TerminalIcon from '@lucide/svelte/icons/terminal';
-	import FileCodeIcon from '@lucide/svelte/icons/file-code';
-	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
+	import {
+		Rocket as RocketIcon,
+		Zap as ZapIcon,
+		Package as PackageIcon,
+		Code as CodeIcon,
+		RefreshCw as RefreshCwIcon,
+		ShieldCheck as ShieldCheckIcon,
+		Copy as CopyIcon,
+		Check as CheckIcon,
+		BookOpen as BookOpenIcon,
+		Github as GithubIcon,
+		Terminal as TerminalIcon,
+		FileCode as FileCodeIcon,
+		ChevronDown as ChevronDownIcon
+	} from '@lucide/svelte';
 	import Highlight from 'svelte-highlight';
 	import typescript from 'svelte-highlight/languages/typescript';
 	import bash from 'svelte-highlight/languages/bash';
