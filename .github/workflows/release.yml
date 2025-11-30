@@ -22,14 +22,21 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # Setup Bun for installing dependencies and building
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # Setup Node.js for npm publish with provenance
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies with Bun
+        run: bun install
 
       - name: Determine version bump type
         id: bump-type
@@ -78,9 +85,10 @@ jobs:
         run: |
           npm version ${{ steps.new-version.outputs.version }} --no-git-tag-version
 
-      - name: Build package
-        run: npm run package
+      - name: Build package with Bun
+        run: bun run package
 
+      # Use npm for publishing with provenance (Bun doesn't support --provenance yet)
       - name: Publish to npm with provenance
         run: npm publish --provenance --access public
         env:
@@ -104,6 +112,7 @@ jobs:
             Automated release v${{ steps.new-version.outputs.version }}
 
             ✅ Published with npm provenance
+            🚀 Built with Bun
 
             Changes in this release:
             - ${{ github.event.head_commit.message }}
