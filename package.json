@@ -12,7 +12,7 @@
 	"bugs": {
 		"url": "https://github.com/Michael-Obele/sveltekit-api-gen/issues"
 	},
-	"homepage": "https://sveltekit-openapi-generator.netlify.app",
+	"homepage": "https://oapi.svelte-apps.me/",
 	"publishConfig": {
 		"access": "public",
 		"provenance": true
